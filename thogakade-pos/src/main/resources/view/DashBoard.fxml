@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" prefHeight="412.0" prefWidth="551.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashBoard">
+   <children>
+      <ImageView fitHeight="615.0" fitWidth="838.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/bg-img.jpeg" />
+         </image>
+      </ImageView>
+      <Label alignment="TOP_CENTER" layoutX="271.0" layoutY="37.0" prefHeight="53.0" prefWidth="297.0" text="POS SYSTEM">
+         <font>
+            <Font name="American Typewriter Bold" size="42.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
