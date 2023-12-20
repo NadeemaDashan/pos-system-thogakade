@@ -1,17 +1,19 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
+import db.DBConnection;
+import dto.CustomerDto;
+import dto.tm.CustomerTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import dto.CustomerDto;
-import dto.tm.CustomerTm;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.CustomerModel;
+import model.impl.CustomerModelImpl;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.util.List;
 
 public class CustomerFormController {
 
@@ -31,7 +33,7 @@ public class CustomerFormController {
     private TableColumn colSalary;
 
     @FXML
-    private TableView tblCustomer;
+    private TableView<CustomerTm> tblCustomer;
 
     @FXML
     private TextField txtAddress;
@@ -44,142 +46,76 @@ public class CustomerFormController {
 
     @FXML
     private TextField txtSalary;
+    private CustomerModel customerModel = new CustomerModelImpl();
 
     @FXML
-    void reloadButtonOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        initialize();
+    void reloadButtonOnAction(ActionEvent event) {
+
     }
 
     @FXML
-    void saveButtonOnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
-        CustomerDto customerDto = new CustomerDto(txtId.getText(),txtName.getText(),
-                txtAddress.getText(),Double.valueOf(txtSalary.getText()));
-        String sql = "INSERT INTO customer VALUES('"+ customerDto.getId()+"','"+ customerDto.getName()+"','"+ customerDto.getAddress()+"',"+ customerDto.getSalary()+")";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "12345678");
-        Statement statement =connection.createStatement();
-        int i=statement.executeUpdate(sql);
-        if (i>0){
-            System.out.println("Success");
-        }else {
-            System.out.println("Error");
+    void saveButtonOnAction(ActionEvent event) {
+        try {
+            boolean isSaved= customerModel.saveCustomer(new CustomerDto(txtId.getText(),txtName.getText(),
+                    txtAddress.getText(),Double.parseDouble(txtSalary.getText())));
+            if (isSaved){
+                new Alert(Alert.AlertType.CONFIRMATION,"Customer Saved").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong try again !").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        connection.close();
     }
 
     @FXML
     void updateButtonOnAction(ActionEvent event) {
-        CustomerDto customerDto = new CustomerDto(txtId.getText(),txtName.getText(),
-                txtAddress.getText(),Double.valueOf(txtSalary.getText()));
-        String sql = "UPDATE customer SET id=";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "12345678");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        int i= 0;
-        try {
-            i = statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (i>0){
-            System.out.println("Success");
-        }else {
-            System.out.println("Error");
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
     public void initialize() throws SQLException, ClassNotFoundException {
-//        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-//        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-//        colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
-//        try {
-//            loadTable();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        tblCustomer.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-//            setData((CustomerTm) newValue);
-//        });
-    }
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
+        loadTable();
 
-    private void setData(CustomerTm newValue) {
-        txtId.setText(newValue.getId());
-        txtName.setText(newValue.getName());
-        txtAddress.setText(newValue.getAddress());
-        txtAddress.setText(String.valueOf(newValue.getSalary()));
     }
-
     public void loadTable() throws SQLException, ClassNotFoundException {
-        ObservableList<CustomerTm> tmList =FXCollections.observableArrayList();
-        String sql = "SELECT *FROM customer";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "12345678");
-        Statement statement =connection.createStatement();
-        ResultSet resultSet =statement.executeQuery(sql);
+        ObservableList<CustomerTm>observableList= FXCollections.observableArrayList();
+        List<CustomerDto> list=customerModel.allCustomers();
+        for (CustomerDto customerDto:list) {
+            Button btn = new Button("Delete");
+            CustomerTm customerTm = new CustomerTm(customerDto.getId(),
+                    customerDto.getName(),
+                    customerDto.getAddress(),
+                    customerDto.getSalary(),
+                    btn);
 
-        while (resultSet.next()){
-            JFXButton btn = new JFXButton("Delete");
-            CustomerTm customer = new CustomerTm();
-            customer.setId(resultSet.getString(1));
-            customer.setName(resultSet.getString(2));
-            customer.setAddress(resultSet.getString(3));
-            customer.setSalary(resultSet.getDouble(4));
-            customer.setButton(btn);
-
-            tmList.add(customer);
-            btn.setOnAction(actionEvent -> {
-                deleteCustomer(customer.getId());
+            btn.setOnAction(ActionEvent -> {
+                try {
+                    customerModel.deleteCustomer(customerDto.getId());
+                    reload();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             });
+            observableList.add(customerTm);
         }
-
-        connection.close();
-        tblCustomer.setItems(tmList);
+        tblCustomer.setItems(observableList);
     }
-
-    private void deleteCustomer(String id) {
-        String sql = "DELETE FROM customer WHERE id='"+id+"'";
+    private void reload(){
         try {
-            Class.forName("com.mysql.jdbc.cj.Driver");
+            loadTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        try {
-            Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade","root","12345678");
-            Statement statement=connection.createStatement();
-            int i=statement.executeUpdate(sql);
-            if (i>0){
-                System.out.println("success");
-            }else{
-                System.out.println("error");
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
 }
-

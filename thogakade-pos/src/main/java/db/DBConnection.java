@@ -8,23 +8,16 @@ public class DBConnection {
     private static DBConnection dbConnection;
     private Connection connection;
 
-    public DBConnection() throws ClassNotFoundException {
+    private DBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        try {
-            DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade","root","12345678");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "12345678");
     }
-    public DBConnection getInstance() throws ClassNotFoundException {
-        if (dbConnection==null){
-            dbConnection=new DBConnection();
-            return dbConnection;
-        }else{
-            return dbConnection;
-        }
+
+    public static DBConnection getInstance() throws ClassNotFoundException, SQLException {
+        return dbConnection != null ? dbConnection : (dbConnection = new DBConnection());
     }
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         return connection;
     }
 }
