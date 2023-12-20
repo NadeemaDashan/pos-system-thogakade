@@ -5,17 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
-import model.tm.CustomerTm;
+import dto.CustomerDto;
+import dto.tm.CustomerTm;
 
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.util.List;
 
 public class CustomerFormController {
 
@@ -56,9 +52,9 @@ public class CustomerFormController {
 
     @FXML
     void saveButtonOnAction(ActionEvent event) throws ClassNotFoundException, SQLException {
-        Customer customer = new Customer(txtId.getText(),txtName.getText(),
+        CustomerDto customerDto = new CustomerDto(txtId.getText(),txtName.getText(),
                 txtAddress.getText(),Double.valueOf(txtSalary.getText()));
-        String sql = "INSERT INTO customer VALUES('"+customer.getId()+"','"+customer.getName()+"','"+customer.getAddress()+"',"+customer.getSalary()+")";
+        String sql = "INSERT INTO customer VALUES('"+ customerDto.getId()+"','"+ customerDto.getName()+"','"+ customerDto.getAddress()+"',"+ customerDto.getSalary()+")";
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "12345678");
         Statement statement =connection.createStatement();
@@ -73,7 +69,7 @@ public class CustomerFormController {
 
     @FXML
     void updateButtonOnAction(ActionEvent event) {
-        Customer customer = new Customer(txtId.getText(),txtName.getText(),
+        CustomerDto customerDto = new CustomerDto(txtId.getText(),txtName.getText(),
                 txtAddress.getText(),Double.valueOf(txtSalary.getText()));
         String sql = "UPDATE customer SET id=";
         try {

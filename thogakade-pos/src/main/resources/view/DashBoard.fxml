@@ -34,5 +34,8 @@
             <Insets />
          </opaqueInsets>
       </Button>
+      <Button fx:id="btnCustomer" layoutX="282.0" layoutY="244.0" mnemonicParsing="false" onAction="#btnCustomerActionPerformed" text="Customer" />
+      <Button fx:id="btnItems" layoutX="392.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnItemsActionPerformed" prefHeight="26.0" prefWidth="63.0" text="Items" />
+      <Button fx:id="btnPlaceOrder" layoutX="488.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnPlaceOrderActionPerformed" prefHeight="26.0" prefWidth="81.0" text="Place Order" />
    </children>
 </AnchorPane>
