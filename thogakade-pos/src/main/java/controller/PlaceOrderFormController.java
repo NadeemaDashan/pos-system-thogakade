@@ -3,18 +3,18 @@ package controller;
 import dto.CustomerDto;
 import dto.ItemDto;
 import dto.OrderDto;
+import dto.tm.CustomerTm;
 import dto.tm.OrderTm;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
@@ -80,10 +80,28 @@ public class PlaceOrderFormController {
     private CustomerModel customerModel = new CustomerModelImpl();
 
     private ItemModel itemModel = new ItemModelImpl();
+    private List<CustomerDto> customerList;
+    private List<ItemDto> itemList;
+    ObservableList<OrderTm> observableList=FXCollections.observableArrayList();
 
     @FXML
     void btnAddToCartActionPerformed(ActionEvent event) {
-
+        int qty=Integer.parseInt(txtQty.getText());
+        double price=Double.parseDouble(txtUnitPrice.getText());
+        double totPrice=qty*price;
+        Button btn = new Button("Delete");
+        OrderTm orderTm = new OrderTm(
+                String.valueOf(cmbItemCode.getValue()),
+                txtDesc.getText(),
+                qty,
+                totPrice,
+                btn
+        );
+        btn.setOnAction(ActionEvent -> {
+            observableList.remove(orderTm);
+        });
+        observableList.add(orderTm);
+        tblCart.setItems(observableList);
     }
 
     @FXML
@@ -100,9 +118,35 @@ public class PlaceOrderFormController {
     //TODO place Order is complex and should be done later......
     }
     public void initialize() throws SQLException, ClassNotFoundException {
+        colId.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
+
+
         generateId();
         loadCustomerId();
         loadItemCodes();
+        customerItemAutoCompletion();
+
+    }
+    public void customerItemAutoCompletion(){
+        cmbCusId.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, id) -> {
+            for (CustomerDto customerDto:customerList) {
+                if (customerDto.getId().equals(id)){
+                    txtCusName.setText(customerDto.getId());
+                }
+            }
+        });
+        cmbItemCode.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, code) -> { //newValue is the item code
+            for (ItemDto dto : itemList) {
+                if (dto.getCode().equals(code)) {
+                    txtDesc.setText(dto.getDesc());
+                    txtUnitPrice.setText(String.valueOf(dto.getUnitPrice()));
+                }
+            }
+        });
     }
     public void generateId() throws SQLException, ClassNotFoundException {
         OrderDto orderDto =orderModel.lastOrder();
@@ -116,7 +160,7 @@ public class PlaceOrderFormController {
 
     private void loadCustomerId() {
         try {
-            List<CustomerDto> customerList=customerModel.allCustomers();
+            customerList=customerModel.allCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (CustomerDto dto : customerList) {
                 list.add(dto.getId());
@@ -130,7 +174,7 @@ public class PlaceOrderFormController {
     }
     private void loadItemCodes() {
         try {
-            List<ItemDto> itemList=itemModel.allItems();
+            itemList=itemModel.allItems();
             ObservableList list = FXCollections.observableArrayList();
             for (ItemDto dto : itemList) {
                 list.add(dto.getCode());

@@ -10,9 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="564.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
+<AnchorPane prefHeight="722.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
     <children>
-      <ImageView fitHeight="574.0" fitWidth="998.0" layoutX="-9.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="746.0" fitWidth="1172.0" layoutX="-9.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/bg-img.jpeg" />
          </image>
@@ -20,12 +20,12 @@
             <BoxBlur height="11.04" iterations="2" width="14.05" />
          </effect>
       </ImageView>
-        <TextField fx:id="txtAddress" layoutX="371.0" layoutY="47.0" prefHeight="26.0" prefWidth="188.0" />
-        <Label layoutX="37.0" layoutY="20.0" prefHeight="18.0" prefWidth="78.0" text="Customer ID" />
-        <TextField fx:id="txtSalary" layoutX="584.0" layoutY="46.0" prefHeight="26.0" prefWidth="156.0" />
-        <Button layoutX="703.0" layoutY="482.0" mnemonicParsing="false" onAction="#reloadButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Reload" />
-        <Label layoutX="369.0" layoutY="20.0" prefHeight="18.0" prefWidth="106.0" text="Customer Address" />
-        <TableView fx:id="tblCustomer" layoutX="45.0" layoutY="159.0" prefHeight="302.0" prefWidth="719.0">
+        <TextField fx:id="txtAddress" layoutX="482.0" layoutY="85.0" prefHeight="26.0" prefWidth="188.0" />
+        <Label layoutX="148.0" layoutY="58.0" prefHeight="18.0" prefWidth="78.0" text="Customer ID" />
+        <TextField fx:id="txtSalary" layoutX="695.0" layoutY="84.0" prefHeight="26.0" prefWidth="156.0" />
+        <Button layoutX="814.0" layoutY="520.0" mnemonicParsing="false" onAction="#reloadButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Reload" />
+        <Label layoutX="480.0" layoutY="58.0" prefHeight="18.0" prefWidth="106.0" text="Customer Address" />
+        <TableView fx:id="tblCustomer" layoutX="156.0" layoutY="197.0" prefHeight="302.0" prefWidth="719.0">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="112.8000431060791" text="ID" />
                 <TableColumn fx:id="colName" prefWidth="183.20005798339844" text="Name" />
@@ -34,11 +34,12 @@
                 <TableColumn fx:id="colOption" prefWidth="99.2000610351563" text="Option" />
             </columns>
         </TableView>
-        <Button layoutX="604.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Update" />
-        <Button layoutX="681.0" layoutY="84.0" mnemonicParsing="false" onAction="#saveButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Save" />
-      <TextField fx:id="txtId" layoutX="36.0" layoutY="47.0" prefHeight="26.0" prefWidth="109.0" />
-      <TextField fx:id="txtName" layoutX="178.0" layoutY="47.0" />
-        <Label layoutX="176.0" layoutY="19.0" prefHeight="18.0" prefWidth="106.0" text="Customer Name" />
-      <Label layoutX="584.0" layoutY="20.0" prefHeight="17.0" prefWidth="109.0" text="Customer Salary" />
+        <Button layoutX="715.0" layoutY="122.0" mnemonicParsing="false" onAction="#updateButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Update" />
+        <Button layoutX="792.0" layoutY="122.0" mnemonicParsing="false" onAction="#saveButtonOnAction" prefHeight="26.0" prefWidth="60.0" text="Save" />
+      <TextField fx:id="txtId" layoutX="147.0" layoutY="85.0" prefHeight="26.0" prefWidth="109.0" />
+      <TextField fx:id="txtName" layoutX="289.0" layoutY="85.0" />
+        <Label layoutX="287.0" layoutY="57.0" prefHeight="18.0" prefWidth="106.0" text="Customer Name" />
+      <Label layoutX="695.0" layoutY="58.0" prefHeight="17.0" prefWidth="109.0" text="Customer Salary" />
+      <Button layoutX="33.0" layoutY="28.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="61.0" text="Button" />
     </children>
 </AnchorPane>
