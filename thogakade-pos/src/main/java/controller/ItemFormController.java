@@ -1,29 +1,39 @@
 package controller;
 
 import dto.ItemDto;
+import dto.tm.ItemTm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.ItemModel;
 import model.impl.ItemModelImpl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ItemFormController {
 
     @FXML
-    private TreeTableColumn<?, ?> colCode;
+    private TableColumn<?, ?> coUnitPrice;
 
     @FXML
-    private TreeTableColumn<?, ?> colDesc;
+    private TableColumn<?, ?> colCode;
 
     @FXML
-    private TreeTableColumn<?, ?> colQty;
+    private TableColumn<?, ?> colDesc;
 
     @FXML
-    private TreeTableColumn<?, ?> colUnitPrice;
+    private TableColumn<?, ?> colQty;
+
+    @FXML
+    private TableView<ItemTm> tblItem;
 
     @FXML
     private TextField txtDesc;
@@ -63,11 +73,34 @@ public class ItemFormController {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @FXML
-    void btnUpdateActionPerformed(ActionEvent event) {
+    void btnUpdateActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {
 
     }
+    public void initialize() throws SQLException, ClassNotFoundException {
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
+        coUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        loadTable();
+    }
+    public void loadTable() throws SQLException, ClassNotFoundException {
+        List<ItemDto> dtoList = itemModel.allItems();
+        ObservableList<ItemTm> observableList= FXCollections.observableArrayList();
+        for (ItemDto dto:dtoList) {
 
+            ItemTm itemTm = new ItemTm(
+                    dto.getCode(),
+                    dto.getDesc(),
+                    dto.getUnitPrice(),
+                    dto.getQty()
+            );
+
+            observableList.add(itemTm);
+        }
+        tblItem.setItems(observableList);
+    }
 }

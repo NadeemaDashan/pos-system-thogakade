@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -30,14 +30,6 @@
       <Label layoutX="269.0" layoutY="34.0" text="Description" />
       <Label layoutX="479.0" layoutY="33.0" text="Unit Price" />
       <Label layoutX="657.0" layoutY="31.0" prefHeight="17.0" prefWidth="100.0" text="Qty On Hand" />
-      <TreeTableView layoutX="111.0" layoutY="185.0" prefHeight="343.0" prefWidth="671.0">
-        <columns>
-            <TreeTableColumn fx:id="colCode" prefWidth="153.96961212158203" text="Item Code" />
-          <TreeTableColumn fx:id="colDesc" prefWidth="248.74896240234375" text="Description" />
-          <TreeTableColumn fx:id="colUnitPrice" prefWidth="153.25103759765625" text="Unit Price" />
-            <TreeTableColumn fx:id="colQty" prefWidth="116.53436279296875" text="Qty On Hand" />
-        </columns>
-      </TreeTableView>
       <Button layoutX="569.0" layoutY="553.0" mnemonicParsing="false" onAction="#btnUpdateActionPerformed" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: blue;" text="Update" textFill="#fcfcfc">
          <font>
             <Font size="21.0" />
@@ -53,5 +45,13 @@
             <Font size="21.0" />
          </font>
       </Button>
+      <TableView fx:id="tblItem" layoutX="111.0" layoutY="185.0" prefHeight="314.0" prefWidth="682.0">
+        <columns>
+          <TableColumn fx:id="colCode" prefWidth="157.74961853027344" text="Item Code" />
+          <TableColumn fx:id="colDesc" prefWidth="244.25039672851562" text="Description" />
+            <TableColumn fx:id="coUnitPrice" prefWidth="155.74969482421875" text="Unit Price" />
+            <TableColumn fx:id="colQty" prefWidth="126.75030517578125" text="Qty On Hand" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
