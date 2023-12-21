@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="784.0" prefWidth="1041.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PlaceOrderFormController">
+<AnchorPane fx:id="pane" prefHeight="897.0" prefWidth="1241.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PlaceOrderFormController">
    <children>
-      <ImageView fitHeight="838.0" fitWidth="1121.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="969.0" fitWidth="1309.0" layoutX="-53.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/bg-img.jpeg" />
          </image>
@@ -22,40 +22,54 @@
             <BoxBlur height="11.0" iterations="3" width="11.0" />
          </effect>
       </ImageView>
-      <ComboBox fx:id="cmbCusId" layoutX="30.0" layoutY="42.0" prefHeight="26.0" prefWidth="117.0" />
-      <Label layoutX="30.0" layoutY="25.0" text="Customer ID" />
-      <TextField fx:id="txtCusName" layoutX="211.0" layoutY="43.0" prefHeight="34.0" prefWidth="160.0" />
-      <Label layoutX="218.0" layoutY="25.0" text="Customer Name" />
-      <ComboBox fx:id="cmbItemCode" layoutX="32.0" layoutY="117.0" prefHeight="29.0" prefWidth="121.0" />
-      <Label layoutX="42.0" layoutY="97.0" prefHeight="20.0" prefWidth="79.0" text="Item Code" />
-      <TextField fx:id="txtDesc" layoutX="213.0" layoutY="116.0" prefHeight="35.0" prefWidth="161.0" />
-      <TextField fx:id="txtUnitPrice" layoutX="427.0" layoutY="114.0" prefHeight="36.0" prefWidth="161.0" />
-      <Label layoutX="222.0" layoutY="96.0" prefHeight="20.0" prefWidth="79.0" text="Description" />
-      <Label layoutX="432.0" layoutY="95.0" prefHeight="20.0" prefWidth="79.0" text="Unit Price" />
-      <TextField fx:id="txtQty" layoutX="644.0" layoutY="114.0" prefHeight="36.0" prefWidth="161.0" />
-      <Label layoutX="649.0" layoutY="94.0" prefHeight="20.0" prefWidth="79.0" text="Buying Qty" />
-      <TableView fx:id="tblCart" layoutX="80.0" layoutY="229.0" prefHeight="420.0" prefWidth="919.0">
+      <ComboBox fx:id="cmbCusId" layoutX="140.0" layoutY="80.0" prefHeight="26.0" prefWidth="117.0" />
+      <Label layoutX="140.0" layoutY="63.0" text="Customer ID" />
+      <TextField fx:id="txtCusName" layoutX="321.0" layoutY="81.0" prefHeight="34.0" prefWidth="160.0" />
+      <Label layoutX="328.0" layoutY="63.0" text="Customer Name" />
+      <ComboBox fx:id="cmbItemCode" layoutX="142.0" layoutY="155.0" prefHeight="29.0" prefWidth="121.0" />
+      <Label layoutX="152.0" layoutY="135.0" prefHeight="20.0" prefWidth="79.0" text="Item Code" />
+      <TextField fx:id="txtDesc" layoutX="323.0" layoutY="154.0" prefHeight="35.0" prefWidth="161.0" />
+      <TextField fx:id="txtUnitPrice" layoutX="537.0" layoutY="152.0" prefHeight="36.0" prefWidth="161.0" />
+      <Label layoutX="332.0" layoutY="134.0" prefHeight="20.0" prefWidth="79.0" text="Description" />
+      <Label layoutX="542.0" layoutY="133.0" prefHeight="20.0" prefWidth="79.0" text="Unit Price" />
+      <TextField fx:id="txtQty" layoutX="754.0" layoutY="152.0" prefHeight="36.0" prefWidth="161.0" />
+      <Label layoutX="759.0" layoutY="132.0" prefHeight="20.0" prefWidth="79.0" text="Buying Qty" />
+      <TableView fx:id="tblCart" layoutX="135.0" layoutY="286.0" prefHeight="420.0" prefWidth="941.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="143.65642547607422" text="Item Code" />
             <TableColumn fx:id="colDesc" prefWidth="306.32826232910156" text="Description" />
             <TableColumn fx:id="colQty" prefWidth="90.56951904296875" text="Qty" />
             <TableColumn fx:id="colAmount" prefWidth="229.4305419921875" text="Amount" />
-            <TableColumn fx:id="colOption" prefWidth="151.97698974609375" text="Option" />
+            <TableColumn fx:id="colOption" prefWidth="169.00006103515625" text="Option" />
         </columns>
       </TableView>
-      <Button depthTest="ENABLE" layoutX="877.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnAddToCartActionPerformed" prefHeight="54.0" prefWidth="119.0" style="-fx-background-color: green;" text="Add to cart" textFill="WHITE">
+      <Button depthTest="ENABLE" layoutX="957.0" layoutY="134.0" mnemonicParsing="false" onAction="#btnAddToCartActionPerformed" prefHeight="54.0" prefWidth="119.0" style="-fx-background-color: green;" text="Add to cart" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Button layoutX="858.0" layoutY="664.0" mnemonicParsing="false" onAction="#btnPlaceOrderActionPerformed" prefHeight="59.0" prefWidth="143.0" style="-fx-background-color: orange;" text="Place Order" textFill="WHITE">
+      <Button layoutX="933.0" layoutY="747.0" mnemonicParsing="false" onAction="#btnPlaceOrderActionPerformed" prefHeight="59.0" prefWidth="143.0" style="-fx-background-color: orange;" text="Place Order" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <Label fx:id="lblTotal" layoutX="90.0" layoutY="669.0" prefHeight="31.0" prefWidth="146.0" text="TOTAL : " textFill="WHITE">
+      <Label fx:id="lblTotal" layoutX="158.0" layoutY="750.0" prefHeight="31.0" prefWidth="146.0" text="TOTAL : " textFill="WHITE">
          <font>
             <Font size="27.0" />
+         </font>
+      </Label>
+      <Button layoutX="51.0" layoutY="24.0" mnemonicParsing="false" onAction="#btnBackActionPerformed" prefHeight="60.0" prefWidth="45.0">
+         <graphic>
+            <ImageView fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back-button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="lblOrderId" layoutX="1053.0" layoutY="42.0" prefHeight="38.0" prefWidth="110.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
          </font>
       </Label>
    </children>
