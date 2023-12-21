@@ -20,14 +20,15 @@ public class ItemModelImpl implements ItemModel {
 
     @Override
     public boolean updateItem(ItemDto dto) throws SQLException, ClassNotFoundException {
-        return false;
+        String sql = "UPDATE item SET code='" + dto.getCode() + "', `description`='" + dto.getDesc() + "', unitPrice='" + dto.getUnitPrice() + "', qty='" + dto.getQty() + "' WHERE code = '" + dto.getCode() + "'";
+        PreparedStatement stm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        return stm.executeUpdate()>0;
     }
 
     @Override
     public boolean deleteItem(String code) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM item WHERE code='" + code + "'";
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-        //executeUpdate changes the database
         return pstm.executeUpdate(sql)>0;
     }
 

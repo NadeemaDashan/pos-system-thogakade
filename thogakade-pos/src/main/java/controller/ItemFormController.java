@@ -1,7 +1,9 @@
 package controller;
 
 import dto.ItemDto;
+import dto.tm.CustomerTm;
 import dto.tm.ItemTm;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,8 +51,12 @@ public class ItemFormController {
     private ItemModel itemModel = new ItemModelImpl();
 
     @FXML
-    void btnDeleteActionPerformed(ActionEvent event) {
-
+    void btnDeleteActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {
+    boolean isDeleted=itemModel.deleteItem(txtId.getText());
+    if (isDeleted){
+        new Alert(Alert.AlertType.INFORMATION,"Item deleted");
+        refresh();
+    }
     }
 
     @FXML
@@ -65,6 +71,7 @@ public class ItemFormController {
             Boolean isSaved=itemModel.saveItem(itemDto);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Item Saved").show();
+                refresh();
             }else {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong try again...").show();
             }
@@ -78,7 +85,19 @@ public class ItemFormController {
 
     @FXML
     void btnUpdateActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {
-
+        ItemDto itemDto = new ItemDto(
+                txtId.getText(),
+                txtDesc.getText(),
+                Double.parseDouble(txtUnitPrice.getText()),
+                Integer.parseInt(txtQty.getText())
+        );
+        boolean isUpdated=itemModel.updateItem(itemDto);
+        if (isUpdated){
+            new Alert(Alert.AlertType.CONFIRMATION,"ITEM UPDATED");
+            refresh();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Something went wrong try again...");
+        }
     }
     public void initialize() throws SQLException, ClassNotFoundException {
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -86,7 +105,27 @@ public class ItemFormController {
         coUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         loadTable();
+
+        tblItem.getSelectionModel().selectedItemProperty().addListener((observableValue, itemTm, newValue) -> {
+            setData(newValue);
+        });
+
     }
+
+    private void setData(ItemTm newValue) {
+        if (newValue != null) {
+            tblItem.refresh();
+            txtId.setEditable(false);
+            txtId.setText(newValue.getCode());
+            txtDesc.setText(newValue.getDesc());
+            txtUnitPrice.setText(String.valueOf(newValue.getUnitPrice()));
+            txtQty.setText(String.valueOf(newValue.getQty()));
+        }
+        if (newValue==null){
+            txtId.setEditable(true);
+        }
+    }
+
     public void loadTable() throws SQLException, ClassNotFoundException {
         List<ItemDto> dtoList = itemModel.allItems();
         ObservableList<ItemTm> observableList= FXCollections.observableArrayList();
@@ -102,5 +141,12 @@ public class ItemFormController {
             observableList.add(itemTm);
         }
         tblItem.setItems(observableList);
+    }
+    public void refresh() throws SQLException, ClassNotFoundException {
+        txtQty.clear();
+        txtId.clear();
+        txtUnitPrice.clear();
+        txtDesc.clear();
+        loadTable();
     }
 }
