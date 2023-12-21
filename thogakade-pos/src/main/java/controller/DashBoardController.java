@@ -88,7 +88,16 @@ public class DashBoardController {
 
     @FXML
     void btnPlaceOrderActionPerformed(ActionEvent event) {
-        //TODO place Order using mvc
+        Stage stage=(Stage)pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/PlaceOrderForm.fxml"))));
+            stage.centerOnScreen();
+            stage.setResizable(false);
+            stage.setTitle("Place Order");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

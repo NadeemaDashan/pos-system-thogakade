@@ -31,17 +31,6 @@ public class ItemModelImpl implements ItemModel {
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
         return pstm.executeUpdate(sql)>0;
     }
-
-    @Override
-    public boolean searchItem(String code) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public ItemDto getItem(String code) throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
     @Override
     public List<ItemDto> allItems() throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM item";
