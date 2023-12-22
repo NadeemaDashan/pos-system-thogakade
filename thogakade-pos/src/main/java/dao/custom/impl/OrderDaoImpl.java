@@ -13,14 +13,10 @@ import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
-    @Override
-    public boolean saveOrder(OrderDto dto) throws SQLException, ClassNotFoundException {
-        return false;
-    }
 
     @Override
     public OrderDto lastOrder() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM orderdetail ORDER BY id DESC LIMIT 1";
+        String sql = "SELECT * FROM orders ORDER BY id DESC LIMIT 1";
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()){
             return new OrderDto(
