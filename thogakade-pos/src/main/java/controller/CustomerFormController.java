@@ -1,7 +1,9 @@
 package controller;
 
+import bo.BoFactory;
 import bo.CustomerBo;
 import bo.impl.CustomerBoImpl;
+import dao.custom.util.BoType;
 import dto.CustomerDto;
 import dto.tm.CustomerTm;
 import javafx.collections.FXCollections;
@@ -56,7 +58,7 @@ public class CustomerFormController {
 
     @FXML
     private AnchorPane pane;
-    private CustomerBo customerBo = new CustomerBoImpl();
+    private CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
 
     @FXML
     void reloadButtonOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {

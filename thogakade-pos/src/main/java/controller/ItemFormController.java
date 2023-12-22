@@ -1,7 +1,9 @@
 package controller;
 
+import bo.BoFactory;
 import bo.ItemBo;
 import bo.impl.ItemBoImpl;
+import dao.custom.util.BoType;
 import dto.ItemDto;
 import dto.tm.ItemTm;
 import javafx.collections.FXCollections;
@@ -56,7 +58,7 @@ public class ItemFormController {
     @FXML
     private AnchorPane pane;
 
-    private ItemBo<ItemDto> itemBo = new ItemBoImpl();
+    private ItemBo<ItemDto> itemBo = BoFactory.getInstance().getBo(BoType.ITEM);
 
     @FXML
     void btnDeleteActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {

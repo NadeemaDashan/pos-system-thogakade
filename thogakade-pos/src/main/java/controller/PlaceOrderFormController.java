@@ -1,11 +1,13 @@
 package controller;
 
+import bo.BoFactory;
 import bo.CustomerBo;
 import bo.ItemBo;
 import bo.PLaceOrderBo;
 import bo.impl.CustomerBoImpl;
 import bo.impl.ItemBoImpl;
 import bo.impl.PlaceOrderBoImpl;
+import dao.custom.util.BoType;
 import dto.CustomerDto;
 import dto.ItemDto;
 
@@ -22,12 +24,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import dao.custom.CustomerDao;
-import dao.custom.ItemDao;
 import dao.custom.OrderDetailsDao;
 import dao.custom.OrderDao;
-import dao.custom.impl.CustomerDaoImpl;
-import dao.custom.impl.ItemDaoImpl;
 import dao.custom.impl.OrderDetailsDaoImpl;
 import dao.custom.impl.OrderDaoImpl;
 
@@ -85,10 +83,10 @@ public class PlaceOrderFormController {
 
     private OrderDao orderDao = new OrderDaoImpl();
 
-    private CustomerBo customerBo = new CustomerBoImpl();
+    private CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
 
-    private ItemBo itemBo = new ItemBoImpl();
-    PLaceOrderBo pLaceOrderBo = new PlaceOrderBoImpl();
+    PLaceOrderBo pLaceOrderBo = BoFactory.getInstance().getBo(BoType.ORDER_DETAILS);
+    private ItemBo<ItemDto> itemBo = BoFactory.getInstance().getBo(BoType.ITEM);
 
     private OrderDetailsDao orderDetailsDao = new OrderDetailsDaoImpl();
     private List<CustomerDto> customerList;
