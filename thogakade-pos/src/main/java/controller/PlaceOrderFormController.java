@@ -2,8 +2,10 @@ package controller;
 
 import bo.CustomerBo;
 import bo.ItemBo;
+import bo.PLaceOrderBo;
 import bo.impl.CustomerBoImpl;
 import bo.impl.ItemBoImpl;
+import bo.impl.PlaceOrderBoImpl;
 import dto.CustomerDto;
 import dto.ItemDto;
 
@@ -86,6 +88,7 @@ public class PlaceOrderFormController {
     private CustomerBo customerBo = new CustomerBoImpl();
 
     private ItemBo itemBo = new ItemBoImpl();
+    PLaceOrderBo pLaceOrderBo = new PlaceOrderBoImpl();
 
     private OrderDetailsDao orderDetailsDao = new OrderDetailsDaoImpl();
     private List<CustomerDto> customerList;
@@ -136,18 +139,12 @@ public class PlaceOrderFormController {
     @FXML
     void btnPlaceOrderActionPerformed(ActionEvent event)  {
         List<OrderDetailsDto> list=orderDetailsCreate();
-        try {
-            boolean isSaved= orderDetailsDao.saveOrderDetails(list);
+        Boolean isSaved=pLaceOrderBo.saveOrderDetails(list);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Order details saved").show();
             }else {
                 new Alert(Alert.AlertType.ERROR,"Something went wron try again...").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void initialize() throws SQLException, ClassNotFoundException {
