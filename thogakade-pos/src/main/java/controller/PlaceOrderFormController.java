@@ -103,9 +103,21 @@ public class PlaceOrderFormController {
         );
         btn.setOnAction(ActionEvent -> {
             observableList.remove(orderTm);
+            double amou=0;
+            for (OrderTm ord :observableList) {
+                double amount=ord.getAmount();
+                amou+=amount;
+            }
+            lblTotal.setText("TOTAL : "+amou);
         });
         observableList.add(orderTm);
         tblCart.setItems(observableList);
+        double amou=0;
+        for (OrderTm ord :observableList) {
+            double amount=ord.getAmount();
+            amou+=amount;
+        }
+        lblTotal.setText("TOTAL : "+amou);
     }
 
     @FXML

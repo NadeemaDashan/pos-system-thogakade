@@ -6,11 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.CustomerModel;
 import model.impl.CustomerModelImpl;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -46,6 +51,9 @@ public class CustomerFormController {
 
     @FXML
     private TextField txtSalary;
+
+    @FXML
+    private AnchorPane pane;
     private CustomerModel customerModel = new CustomerModelImpl();
 
     @FXML
@@ -159,5 +167,20 @@ public class CustomerFormController {
         txtId.clear();
         txtSalary.clear();
     }
+
+    @FXML
+    void btnBackActionPerformed(ActionEvent event) {
+        Stage stage=(Stage)pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoard.fxml"))));
+            stage.centerOnScreen();
+            stage.setTitle("DashBoard");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 

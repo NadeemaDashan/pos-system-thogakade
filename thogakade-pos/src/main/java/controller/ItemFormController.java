@@ -8,15 +8,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.ItemModel;
 import model.impl.ItemModelImpl;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -48,6 +53,10 @@ public class ItemFormController {
 
     @FXML
     private TextField txtUnitPrice;
+
+    @FXML
+    private AnchorPane pane;
+
     private ItemModel itemModel = new ItemModelImpl();
 
     @FXML
@@ -148,5 +157,18 @@ public class ItemFormController {
         txtUnitPrice.clear();
         txtDesc.clear();
         loadTable();
+    }
+
+    @FXML
+    void btnBackActionPerformed(ActionEvent event) {
+        Stage stage=(Stage)pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/DashBoard.fxml"))));
+            stage.centerOnScreen();
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

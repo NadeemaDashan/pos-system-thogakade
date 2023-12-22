@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="624.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
+<AnchorPane fx:id="pane" prefHeight="624.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
    <children>
-      <ImageView fitHeight="678.0" fitWidth="905.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="765.0" fitWidth="1119.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/bg-img.jpeg" />
          </image>
@@ -22,36 +21,45 @@
             <BoxBlur height="11.04" iterations="2" width="11.04" />
          </effect>
       </ImageView>
-      <TextField fx:id="txtId" layoutX="70.0" layoutY="55.0" prefWidth="160.0" />
-      <TextField fx:id="txtDesc" layoutX="252.0" layoutY="55.0" prefHeight="26.0" prefWidth="209.0" />
-      <TextField fx:id="txtUnitPrice" layoutX="481.0" layoutY="54.0" prefHeight="26.0" prefWidth="143.0" />
-      <TextField fx:id="txtQty" layoutX="650.0" layoutY="55.0" prefHeight="26.0" prefWidth="145.0" />
-      <Label layoutX="79.0" layoutY="33.0" text="Item Code" />
-      <Label layoutX="269.0" layoutY="34.0" text="Description" />
-      <Label layoutX="479.0" layoutY="33.0" text="Unit Price" />
-      <Label layoutX="657.0" layoutY="31.0" prefHeight="17.0" prefWidth="100.0" text="Qty On Hand" />
-      <Button layoutX="569.0" layoutY="553.0" mnemonicParsing="false" onAction="#btnUpdateActionPerformed" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: blue;" text="Update" textFill="#fcfcfc">
+      <TextField fx:id="txtId" layoutX="196.0" layoutY="90.0" prefWidth="160.0" />
+      <TextField fx:id="txtDesc" layoutX="378.0" layoutY="90.0" prefHeight="26.0" prefWidth="209.0" />
+      <TextField fx:id="txtUnitPrice" layoutX="607.0" layoutY="89.0" prefHeight="26.0" prefWidth="143.0" />
+      <TextField fx:id="txtQty" layoutX="776.0" layoutY="90.0" prefHeight="26.0" prefWidth="145.0" />
+      <Label layoutX="200.0" layoutY="71.0" prefHeight="17.0" prefWidth="82.0" text="Item Code" />
+      <Label layoutX="383.0" layoutY="70.0" text="Description" />
+      <Label layoutX="611.0" layoutY="71.0" text="Unit Price" />
+      <Label layoutX="781.0" layoutY="71.0" prefHeight="17.0" prefWidth="100.0" text="Qty On Hand" />
+      <Button layoutX="701.0" layoutY="571.0" mnemonicParsing="false" onAction="#btnUpdateActionPerformed" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: blue;" text="Update" textFill="#fcfcfc">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <Button layoutX="684.0" layoutY="553.0" mnemonicParsing="false" onAction="#btnSaveActionPerformed" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: green;" text="Save" textFill="WHITE">
+      <Button layoutX="830.0" layoutY="571.0" mnemonicParsing="false" onAction="#btnSaveActionPerformed" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: green;" text="Save" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Button layoutX="457.0" layoutY="551.0" mnemonicParsing="false" onAction="#btnDeleteActionPerformed" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
+      <Button layoutX="579.0" layoutY="573.0" mnemonicParsing="false" onAction="#btnDeleteActionPerformed" prefHeight="47.0" prefWidth="107.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <TableView fx:id="tblItem" layoutX="111.0" layoutY="185.0" prefHeight="314.0" prefWidth="682.0">
+      <TableView fx:id="tblItem" layoutX="150.0" layoutY="202.0" prefHeight="344.0" prefWidth="816.0">
         <columns>
-          <TableColumn fx:id="colCode" prefWidth="157.74961853027344" text="Item Code" />
-          <TableColumn fx:id="colDesc" prefWidth="244.25039672851562" text="Description" />
-            <TableColumn fx:id="coUnitPrice" prefWidth="155.74969482421875" text="Unit Price" />
-            <TableColumn fx:id="colQty" prefWidth="126.75030517578125" text="Qty On Hand" />
+          <TableColumn fx:id="colCode" prefWidth="178.0328826904297" text="Item Code" />
+          <TableColumn fx:id="colDesc" prefWidth="268.4671630859375" text="Description" />
+            <TableColumn fx:id="coUnitPrice" prefWidth="158.6781005859375" text="Unit Price" />
+            <TableColumn fx:id="colQty" prefWidth="210.174072265625" text="Qty On Hand" />
         </columns>
       </TableView>
+      <Button layoutX="43.0" layoutY="38.0" mnemonicParsing="false" onAction="#btnBackActionPerformed" prefHeight="36.0" prefWidth="56.0">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back-button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
