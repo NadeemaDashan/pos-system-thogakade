@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import dao.custom.util.CrudUtil;
 import db.DBConnection;
 import dto.OrderDetailsDto;
 import dao.custom.OrderDetailsDao;
@@ -15,15 +16,10 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
         int i = 0;
         for (OrderDetailsDto orderDetails:list) {
             String sql = "INSERT INTO orderdetail VALUES(?,?,?,?)";
-            PreparedStatement preparedStatement =DBConnection.getInstance().getConnection().prepareStatement(sql);
-            preparedStatement.setString(1, orderDetails.getOrderId());
-            preparedStatement.setString(2, orderDetails.getItemCode());
-            preparedStatement.setInt(3,orderDetails.getQty());
-            preparedStatement.setDouble(4,orderDetails.getUnitPrice());
-
-            i=preparedStatement.executeUpdate();
+            return CrudUtil.execute(sql,orderDetails.getOrderId(),orderDetails.getItemCode(),
+                    orderDetails.getQty(),orderDetails.getUnitPrice());
         }
-        return i>0;
+        return false;
     }
 
     @Override
