@@ -3,10 +3,12 @@ package dao.custom.impl;
 import db.DBConnection;
 import dto.OrderDto;
 import dao.custom.OrderDao;
+import entity.Orders;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -28,6 +30,26 @@ public class OrderDaoImpl implements OrderDao {
                     null
             );
         }
+        return null;
+    }
+
+    @Override
+    public boolean save(Orders entity) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Orders entity) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String value) {
+        return false;
+    }
+
+    @Override
+    public List<Orders> GetAll() {
         return null;
     }
 }

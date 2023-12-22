@@ -3,6 +3,7 @@ package dao.custom.impl;
 import db.DBConnection;
 import dto.OrderDetailsDto;
 import dao.custom.OrderDetailsDao;
+import entity.OrderDetails;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,5 +24,25 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
             i=preparedStatement.executeUpdate();
         }
         return i>0;
+    }
+
+    @Override
+    public boolean save(OrderDetails entity) {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDetails entity) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String value) {
+        return false;
+    }
+
+    @Override
+    public List<OrderDetails> GetAll() {
+        return null;
     }
 }
