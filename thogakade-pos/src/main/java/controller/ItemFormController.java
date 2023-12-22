@@ -1,9 +1,7 @@
 package controller;
 
 import dto.ItemDto;
-import dto.tm.CustomerTm;
 import dto.tm.ItemTm;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,11 +13,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.ItemModel;
-import model.impl.ItemModelImpl;
+import dao.custom.ItemDao;
+import dao.custom.impl.ItemDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -57,11 +54,11 @@ public class ItemFormController {
     @FXML
     private AnchorPane pane;
 
-    private ItemModel itemModel = new ItemModelImpl();
+    private ItemDao itemDao = new ItemDaoImpl();
 
     @FXML
     void btnDeleteActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {
-    boolean isDeleted=itemModel.deleteItem(txtId.getText());
+    boolean isDeleted= itemDao.deleteItem(txtId.getText());
     if (isDeleted){
         new Alert(Alert.AlertType.INFORMATION,"Item deleted");
         refresh();
@@ -77,7 +74,7 @@ public class ItemFormController {
                 Integer.parseInt(txtQty.getText())
         );
         try {
-            Boolean isSaved=itemModel.saveItem(itemDto);
+            Boolean isSaved= itemDao.saveItem(itemDto);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Item Saved").show();
                 refresh();
@@ -100,7 +97,7 @@ public class ItemFormController {
                 Double.parseDouble(txtUnitPrice.getText()),
                 Integer.parseInt(txtQty.getText())
         );
-        boolean isUpdated=itemModel.updateItem(itemDto);
+        boolean isUpdated= itemDao.updateItem(itemDto);
         if (isUpdated){
             new Alert(Alert.AlertType.CONFIRMATION,"ITEM UPDATED");
             refresh();
@@ -136,7 +133,7 @@ public class ItemFormController {
     }
 
     public void loadTable() throws SQLException, ClassNotFoundException {
-        List<ItemDto> dtoList = itemModel.allItems();
+        List<ItemDto> dtoList = itemDao.allItems();
         ObservableList<ItemTm> observableList= FXCollections.observableArrayList();
         for (ItemDto dto:dtoList) {
 

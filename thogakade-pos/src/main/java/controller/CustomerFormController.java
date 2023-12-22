@@ -12,8 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
-import model.impl.CustomerModelImpl;
+import dao.custom.CustomerDao;
+import dao.custom.impl.CustomerDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,7 +54,7 @@ public class CustomerFormController {
 
     @FXML
     private AnchorPane pane;
-    private CustomerModel customerModel = new CustomerModelImpl();
+    private CustomerDao customerDao = new CustomerDaoImpl();
 
     @FXML
     void reloadButtonOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -65,7 +65,7 @@ public class CustomerFormController {
     @FXML
     void saveButtonOnAction(ActionEvent event) {
         try {
-            boolean isSaved = customerModel.saveCustomer(new CustomerDto(txtId.getText(), txtName.getText(),
+            boolean isSaved = customerDao.saveCustomer(new CustomerDto(txtId.getText(), txtName.getText(),
                     txtAddress.getText(), Double.parseDouble(txtSalary.getText())));
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Saved").show();
@@ -83,7 +83,7 @@ public class CustomerFormController {
     @FXML
     void updateButtonOnAction(ActionEvent event) {
         try {
-            boolean isUpdated= customerModel.updateCustomer(new CustomerDto(txtId.getText(),txtName.getText(),
+            boolean isUpdated= customerDao.updateCustomer(new CustomerDto(txtId.getText(),txtName.getText(),
                     txtAddress.getText(),Double.parseDouble(txtSalary.getText())));
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer Info Updated!").show();
@@ -136,7 +136,7 @@ public class CustomerFormController {
 
     public void loadTable() throws SQLException, ClassNotFoundException {
         ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
-        List<CustomerDto> list = customerModel.allCustomers();
+        List<CustomerDto> list = customerDao.allCustomers();
         for (CustomerDto customerDto : list) {
             Button btn = new Button("Delete");
             CustomerTm customerTm = new CustomerTm(customerDto.getId(),
@@ -147,7 +147,7 @@ public class CustomerFormController {
 
             btn.setOnAction(ActionEvent -> {
                 try {
-                    customerModel.deleteCustomer(customerDto.getId());
+                    customerDao.deleteCustomer(customerDto.getId());
                     reload();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

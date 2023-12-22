@@ -16,14 +16,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
-import model.ItemModel;
-import model.OrderDetailsModel;
-import model.OrderModel;
-import model.impl.CustomerModelImpl;
-import model.impl.ItemModelImpl;
-import model.impl.OrderDetailsModelImpl;
-import model.impl.OrderModelImpl;
+import dao.custom.CustomerDao;
+import dao.custom.ItemDao;
+import dao.custom.OrderDetailsDao;
+import dao.custom.OrderDao;
+import dao.custom.impl.CustomerDaoImpl;
+import dao.custom.impl.ItemDaoImpl;
+import dao.custom.impl.OrderDetailsDaoImpl;
+import dao.custom.impl.OrderDaoImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -77,13 +77,13 @@ public class PlaceOrderFormController {
     @FXML
     private TextField txtUnitPrice;
 
-    private OrderModel orderModel = new OrderModelImpl();
+    private OrderDao orderDao = new OrderDaoImpl();
 
-    private CustomerModel customerModel = new CustomerModelImpl();
+    private CustomerDao customerDao = new CustomerDaoImpl();
 
-    private ItemModel itemModel = new ItemModelImpl();
+    private ItemDao itemDao = new ItemDaoImpl();
 
-    private OrderDetailsModel orderDetailsModel = new OrderDetailsModelImpl();
+    private OrderDetailsDao orderDetailsDao = new OrderDetailsDaoImpl();
     private List<CustomerDto> customerList;
     private List<ItemDto> itemList;
     ObservableList<OrderTm> observableList=FXCollections.observableArrayList();
@@ -133,7 +133,7 @@ public class PlaceOrderFormController {
     void btnPlaceOrderActionPerformed(ActionEvent event)  {
         List<OrderDetailsDto> list=orderDetailsCreate();
         try {
-            boolean isSaved=orderDetailsModel.saveOrderDetails(list);
+            boolean isSaved= orderDetailsDao.saveOrderDetails(list);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Order details saved").show();
             }else {
@@ -178,7 +178,7 @@ public class PlaceOrderFormController {
         });
     }
     public void generateId() throws SQLException, ClassNotFoundException {
-        OrderDto orderDto =orderModel.lastOrder();
+        OrderDto orderDto = orderDao.lastOrder();
         if (orderDto!=null){
             String id=orderDto.getOrderId();
             int num=Integer.parseInt(id.split("D")[1]);
@@ -189,7 +189,7 @@ public class PlaceOrderFormController {
 
     private void loadCustomerId() {
         try {
-            customerList=customerModel.allCustomers();
+            customerList= customerDao.allCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (CustomerDto dto : customerList) {
                 list.add(dto.getId());
@@ -203,7 +203,7 @@ public class PlaceOrderFormController {
     }
     private void loadItemCodes() {
         try {
-            itemList=itemModel.allItems();
+            itemList= itemDao.allItems();
             ObservableList list = FXCollections.observableArrayList();
             for (ItemDto dto : itemList) {
                 list.add(dto.getCode());

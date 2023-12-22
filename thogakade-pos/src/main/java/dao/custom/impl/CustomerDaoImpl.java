@@ -1,17 +1,16 @@
-package model.impl;
+package dao.custom.impl;
 
 import db.DBConnection;
 import dto.CustomerDto;
-import model.CustomerModel;
+import dao.custom.CustomerDao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerModelImpl implements CustomerModel {
+public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public boolean saveCustomer(CustomerDto dto) throws SQLException, ClassNotFoundException {
