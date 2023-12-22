@@ -1,5 +1,9 @@
 package controller;
 
+import bo.CustomerBo;
+import bo.ItemBo;
+import bo.impl.CustomerBoImpl;
+import bo.impl.ItemBoImpl;
 import dto.CustomerDto;
 import dto.ItemDto;
 
@@ -79,9 +83,9 @@ public class PlaceOrderFormController {
 
     private OrderDao orderDao = new OrderDaoImpl();
 
-    private CustomerDao customerDao = new CustomerDaoImpl();
+    private CustomerBo customerBo = new CustomerBoImpl();
 
-    private ItemDao itemDao = new ItemDaoImpl();
+    private ItemBo itemBo = new ItemBoImpl();
 
     private OrderDetailsDao orderDetailsDao = new OrderDetailsDaoImpl();
     private List<CustomerDto> customerList;
@@ -189,7 +193,7 @@ public class PlaceOrderFormController {
 
     private void loadCustomerId() {
         try {
-            customerList= customerDao.allCustomers();
+            customerList= customerBo.allCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (CustomerDto dto : customerList) {
                 list.add(dto.getId());
@@ -203,7 +207,7 @@ public class PlaceOrderFormController {
     }
     private void loadItemCodes() {
         try {
-            itemList= itemDao.allItems();
+            itemList= itemBo.allItems();
             ObservableList list = FXCollections.observableArrayList();
             for (ItemDto dto : itemList) {
                 list.add(dto.getCode());

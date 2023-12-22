@@ -1,5 +1,7 @@
 package controller;
 
+import bo.ItemBo;
+import bo.impl.ItemBoImpl;
 import dto.ItemDto;
 import dto.tm.ItemTm;
 import javafx.collections.FXCollections;
@@ -54,11 +56,11 @@ public class ItemFormController {
     @FXML
     private AnchorPane pane;
 
-    private ItemDao itemDao = new ItemDaoImpl();
+    private ItemBo<ItemDto> itemBo = new ItemBoImpl();
 
     @FXML
     void btnDeleteActionPerformed(ActionEvent event) throws SQLException, ClassNotFoundException {
-    boolean isDeleted= itemDao.deleteItem(txtId.getText());
+    boolean isDeleted= itemBo.deleteItem(txtId.getText());
     if (isDeleted){
         new Alert(Alert.AlertType.INFORMATION,"Item deleted");
         refresh();
@@ -74,7 +76,7 @@ public class ItemFormController {
                 Integer.parseInt(txtQty.getText())
         );
         try {
-            Boolean isSaved= itemDao.saveItem(itemDto);
+            Boolean isSaved= itemBo.saveItem(itemDto);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Item Saved").show();
                 refresh();
@@ -97,7 +99,7 @@ public class ItemFormController {
                 Double.parseDouble(txtUnitPrice.getText()),
                 Integer.parseInt(txtQty.getText())
         );
-        boolean isUpdated= itemDao.updateItem(itemDto);
+        boolean isUpdated= itemBo.updateItem(itemDto);
         if (isUpdated){
             new Alert(Alert.AlertType.CONFIRMATION,"ITEM UPDATED");
             refresh();
@@ -133,7 +135,7 @@ public class ItemFormController {
     }
 
     public void loadTable() throws SQLException, ClassNotFoundException {
-        List<ItemDto> dtoList = itemDao.allItems();
+        List<ItemDto> dtoList = itemBo.allItems();
         ObservableList<ItemTm> observableList= FXCollections.observableArrayList();
         for (ItemDto dto:dtoList) {
 
