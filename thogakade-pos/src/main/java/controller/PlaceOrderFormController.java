@@ -2,10 +2,10 @@ package controller;
 
 import dto.CustomerDto;
 import dto.ItemDto;
+
+import dto.OrderDetailsDto;
 import dto.OrderDto;
-import dto.tm.CustomerTm;
 import dto.tm.OrderTm;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,18 +14,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
 import model.ItemModel;
+import model.OrderDetailsModel;
 import model.OrderModel;
 import model.impl.CustomerModelImpl;
 import model.impl.ItemModelImpl;
+import model.impl.OrderDetailsModelImpl;
 import model.impl.OrderModelImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceOrderFormController {
@@ -80,6 +82,8 @@ public class PlaceOrderFormController {
     private CustomerModel customerModel = new CustomerModelImpl();
 
     private ItemModel itemModel = new ItemModelImpl();
+
+    private OrderDetailsModel orderDetailsModel = new OrderDetailsModelImpl();
     private List<CustomerDto> customerList;
     private List<ItemDto> itemList;
     ObservableList<OrderTm> observableList=FXCollections.observableArrayList();
@@ -114,9 +118,22 @@ public class PlaceOrderFormController {
     }
 
     @FXML
-    void btnPlaceOrderActionPerformed(ActionEvent event) {
-    //TODO place Order is complex and should be done later......
+    void btnPlaceOrderActionPerformed(ActionEvent event)  {
+        List<OrderDetailsDto> list=orderDetailsCreate();
+        try {
+            boolean isSaved=orderDetailsModel.saveOrderDetails(list);
+            if (isSaved){
+                new Alert(Alert.AlertType.CONFIRMATION,"Order details saved").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wron try again...").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public void initialize() throws SQLException, ClassNotFoundException {
         colId.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("desc"));
@@ -185,6 +202,22 @@ public class PlaceOrderFormController {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<OrderDetailsDto> orderDetailsCreate() {
+        List<OrderDetailsDto> orderDetailsList = null;
+        for (OrderTm order : observableList) {
+            double unitPrice = order.getAmount() / order.getQty();
+            OrderDetailsDto orderDetailsDto = new OrderDetailsDto(
+                    lblOrderId.getText(),
+                    order.getCode(),
+                    order.getQty(),
+                    unitPrice
+            );
+            orderDetailsList = new ArrayList<>();
+            orderDetailsList.add(orderDetailsDto);
+        }
+        return orderDetailsList;
     }
 
 }

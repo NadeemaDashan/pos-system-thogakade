@@ -12,4 +12,3 @@ public class OrderDetailsDto {
     private int qty;
     private double unitPrice;
 }
-
